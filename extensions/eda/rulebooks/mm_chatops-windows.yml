@@ -9,7 +9,10 @@
   rules:
 
     - name: Update Windows
-      condition: event.payload.text is match("!update") && event.payload.channel_name is match("WINDOWS_TEAM")
+      condition:
+        all:
+         - event.payload.text is match("!update")
+         - event.payload.channel_name is match("WINDOWS_TEAM")
       action:
        run_job_template:
         organization: "Default"
