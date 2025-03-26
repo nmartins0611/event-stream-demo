@@ -1,0 +1,17 @@
+---
+- name: Listen for events on a webhook
+  hosts: all
+  sources:
+    - ansible.eda.webhook:
+        host: 0.0.0.0
+        port: 5000
+
+  rules:
+
+    - name: Update RHEL
+      condition: event.payload.text is match("!update") && event.payload.channel_name is match("RHEL_TEAM")
+      action:
+       run_job_template:
+        organization: "Default"
+        name: "Update RHEL"
+        post_events: true
