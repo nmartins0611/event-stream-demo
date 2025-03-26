@@ -9,7 +9,10 @@
   rules:
 
     - name: Update RHEL
-      condition: event.payload.text is match("!update") && event.payload.channel_name is match("RHEL_TEAM")
+      condition:
+        all:
+         - event.payload.text is match("!update") 
+         - event.payload.channel_name is match("RHEL_TEAM")
       action:
        run_job_template:
         organization: "Default"
